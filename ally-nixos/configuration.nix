@@ -291,14 +291,11 @@
   # services.power-profiles-daemon.enable = false;
   services.tuned.enable = false;
 
-  # Environment variables for Steamm
+  # Environment variables for Steam
   environment.sessionVariables = {
     PROTON_USE_NTSYNC       = "1";
-    ENABLE_HDR_WSI          = "1";
-    DXVK_HDR                = "1";
     PROTON_ENABLE_AMD_AGS   = "1";
     PROTON_ENABLE_NVAPI     = "1";
-    ENABLE_GAMESCOPE_WSI    = "1";
     STEAM_MULTIPLE_XWAYLANDS = "1";
 
     STEAMOS_NESTED_DESKTOP_WIDTH  = "1920";
@@ -387,6 +384,7 @@
     # faugus-launcher (pkgs.bottles.override { removeWarningPopup = true; }) # nero-umu # wine launchers
     # scanmem # installs GameConqueror
     mangohud # performance overlay
+    vulkan-tools
 
     maliit-keyboard maliit-framework
 
