@@ -364,7 +364,7 @@
     # CLI tools
     vim htop
     dust nix-du graphviz # nix tools
-    git gh github-desktop # build tools
+    git git-credential-manager gh github-desktop # build tools
     grc highlight # text coloring
     firejail # sandboxing
     wget aria2 rsync zsync # file transfer tools
