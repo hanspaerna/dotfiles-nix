@@ -382,7 +382,7 @@
     # CuboCore.corekeyboard # on-screen keyboad (x11 only)
 
     # VPN / Homelab
-    tailscale trayscale
+    tailscale trayscale backrest
 
     # Gaming
     # wineWowPackages.stagingFull dxvk winetricks umu-launcher-unwrapped # wine
@@ -392,6 +392,7 @@
     # scanmem # installs GameConqueror
     mangohud # performance overlay
     vulkan-tools
+    yad
 
     maliit-keyboard maliit-framework
 
@@ -524,6 +525,13 @@
     ];
   };
 
+  # re-sync Handheld Daemon configuration
+  system.activationScripts.hhdState = ''
+    install -D -m 0644 \
+      ${./config/hhd/state.yml} \
+      /etc/hhd/state.yml
+   ${pkgs.systemd}/bin/systemctl restart handheld-daemon.service
+  '';
 
   # DO NOT CHANGE FROM GENERATED DEFAULT
   # https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion
