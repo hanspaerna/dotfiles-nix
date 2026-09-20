@@ -131,6 +131,10 @@ in
       };
     };
 
+    configFile.kscreenlockerrc = {
+      Daemon.Autolock = false; # disable until someone finally invents a working virtual keyboard for lock screen in Wayland
+    };
+
     kscreenlocker = {
       appearance.wallpaper = wallpaper;
     };

@@ -173,7 +173,7 @@
   ];
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver.enable = false;
   # services.xserver.displayManager.startx.enable = true; # Needed for x11 desktop mode
 
   # Configure SDDM with wayland as defaults
@@ -211,7 +211,7 @@
     enable = true;
     package = pkgs.steam.override { # adds needed xorg library for nested gamescope
       extraPkgs = pkgs': with pkgs'; [
-        xorg.libXcursor xorg.libXi xorg.libXinerama xorg.libXScrnSaver
+        libxcursor libxi libxinerama libxscrnsaver
         libpng libpulseaudio libvorbis
         stdenv.cc.cc.lib # Provides libstdc++.so.6
         libkrb5 keyutils # Add other libraries as needed
@@ -297,10 +297,11 @@
 
   # Environment variables for Steam
   environment.sessionVariables = {
-    PROTON_USE_NTSYNC       = "1";
-    PROTON_ENABLE_AMD_AGS   = "1";
-    PROTON_ENABLE_NVAPI     = "1";
+    PROTON_USE_NTSYNC        = "1";
+    PROTON_ENABLE_AMD_AGS    = "1";
+    PROTON_ENABLE_NVAPI      = "1";
     STEAM_MULTIPLE_XWAYLANDS = "1";
+    PROTON_ENABLE_WAYLAND    = "1"; # Proton games will silently fail in Plasma Wayland without this one
 
     STEAMOS_NESTED_DESKTOP_WIDTH  = "1920";
     STEAMOS_NESTED_DESKTOP_HEIGHT = "1080";
@@ -391,7 +392,6 @@
     vulkan-tools
     yad
 
-    maliit-keyboard maliit-framework
     supersonic
 
     # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
