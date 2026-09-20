@@ -357,7 +357,7 @@
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
     # background system packages
-    cmake busybox
+    cmake busybox gnumake
     xdg-utils desktop-file-utils
     wl-clipboard wl-clipboard-x11
     libwebp libva libva-utils libvpx # codecs
@@ -378,23 +378,21 @@
     kdePackages.kate kdePackages.kcharselect kdePackages.kcalc kdePackages.kcolorchooser
     kdePackages.kontrast kdePackages.arianna haruna krename
 
-    firefox # browser
-    # CuboCore.corekeyboard # on-screen keyboad (x11 only)
+    firefox
 
     # VPN / Homelab
     tailscale trayscale backrest
 
     # Gaming
-    # wineWowPackages.stagingFull dxvk winetricks umu-launcher-unwrapped # wine
+    winetricks # wine
     protonup-qt sgdboop # steam-rom-manager # steam management
-    # lutris heroic # game management (use wrapped version so executable can run in the fhs env)
-    # faugus-launcher (pkgs.bottles.override { removeWarningPopup = true; }) # nero-umu # wine launchers
-    # scanmem # installs GameConqueror
+    lutris
     mangohud # performance overlay
     vulkan-tools
     yad
 
     maliit-keyboard maliit-framework
+    supersonic
 
     # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
     (let base = pkgs.appimageTools.defaultFhsEnvArgs; in

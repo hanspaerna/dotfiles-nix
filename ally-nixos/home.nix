@@ -2,7 +2,8 @@
 
 
 let
-  dotfiles = "/home/yanumibaal/dotfiles-nix/ally-nixos";
+  username = "yanumibaal";
+  dotfiles = "/home/${username}/dotfiles-nix/ally-nixos";
   wallpaperFolder = "${dotfiles}/assets/wallpapers";
   wallpaper = "${wallpaperFolder}/wallhaven-4yl377.png";
 in
@@ -16,8 +17,8 @@ in
   ];
 
   home = {
-    username = "yanumibaal";
-    homeDirectory = "/home/yanumibaal";
+    username = "${username}";
+    homeDirectory = "/home/${username}";
 
     # Add "Return to Gaming Mode" desktop shortcut, like in Steam Deck
     file."Desktop/Return-to-Gaming-Mode.desktop".source =
@@ -64,7 +65,7 @@ in
 	  then
 	    ${pkgs.coreutils}/bin/cp \
               /etc/hhd/state.yml \
-              /home/yanumibaal/dotfiles-nix/ally-nixos/config/hhd/state.yml
+              ${dotfiles}/config/hhd/state.yml
 	    fi
 	''}";
         icon = "hhd-ui";
@@ -77,6 +78,23 @@ in
     # Do not touch
     stateVersion = "26.11";
   };
+
+  #
+  # symlinks
+  #
+
+  home.file = {
+    "Steamapps".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/.steam/steam/steamapps";
+  };
+
+  home.file = {
+    ".local/share/user-places.xbel".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/config/user-places.xbel";
+    ".local/share/user-places.xbel".force = true;
+  };
+
+  #
+  # end symlinks
+  #
 
   # Use only if there is no other way to install an application
   services.flatpak = {
@@ -98,10 +116,19 @@ in
   programs.plasma = {
     enable = true;
 
+    overrideConfig = true;
+    immutableByDefault = true;
+
+    configFile."kdeglobals"."General"."AccentColor" = "233,187,122";
+
     workspace = {
       lookAndFeel = "org.kde.breezedark.desktop";
       iconTheme = "breeze-dark";
       wallpaper = wallpaper;
+      splashScreen = {
+        engine = "none";
+        theme = "None";
+      };
     };
 
     kscreenlocker = {
@@ -134,6 +161,7 @@ in
             config = {
               General = {
                 highlightNewlyInstalledApps = false;
+                icon = "nix-snowflake-white";
               };
             };
           }
@@ -144,9 +172,10 @@ in
               General = {
                 launchers = [
                   "applications:org.kde.dolphin.desktop"
-                  "applications:firefox"
+                  "applications:firefox.desktop"
                   "applications:org.telegram.desktop.desktop"
                   "applications:org.kde.konsole.desktop"
+                  "applications:supersonic.desktop"
                 ];
               };
             };
@@ -195,4 +224,6 @@ in
       sessionRestore.restoreOpenApplicationsOnLogin = "startWithEmptySession";
     };
   };
+
 }
+

@@ -1,3 +1,3 @@
 .PHONY: update
 update:
-	home-manager switch --flake .#ally-nixos
+	sudo nixos-rebuild switch --flake .#ally-nixos
