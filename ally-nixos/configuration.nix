@@ -166,7 +166,11 @@
 
   # Enable the KDE Plasma Desktop Environment.
   services.desktopManager.plasma6.enable = true;
-  programs.kdeconnect.enable = true;
+  programs.kdeconnect.enable = false;
+
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    discover
+  ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -377,6 +381,9 @@
     firefox # browser
     # CuboCore.corekeyboard # on-screen keyboad (x11 only)
 
+    # VPN / Homelab
+    tailscale trayscale
+
     # Gaming
     # wineWowPackages.stagingFull dxvk winetricks umu-launcher-unwrapped # wine
     protonup-qt sgdboop # steam-rom-manager # steam management
@@ -409,6 +416,27 @@
       extraOutputsToInstall = ["dev"];
     }))
   ];
+
+  services.tailscale = {
+    # Enable tailscale at startup
+    enable = true;
+    useRoutingFeatures = "client";
+  };
+
+  # Make my only user an operator of Tailscale
+  systemd.services.tailscale-operator = {
+    description = "Configure Tailscale operator";
+    wantedBy = [ "multi-user.target" ];
+
+    after = [ "tailscaled.service" ];
+    requires = [ "tailscaled.service" ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.tailscale}/bin/tailscale set --operator=yanumibaal";
+    };
+  };
+
   
   services.flatpak.enable = true;
   programs.virt-manager.enable = true;

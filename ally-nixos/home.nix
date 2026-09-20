@@ -34,6 +34,15 @@
       Terminal=false
     '';
 
+    # Automatically start Trayscale in Desktop mode
+    file.".config/autostart/trayscale.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=Trayscale
+      Exec=${pkgs.trayscale}/bin/trayscale --hide-window
+      Terminal=false
+    '';
+
     # Do not touch
     stateVersion = "26.11";
   };
