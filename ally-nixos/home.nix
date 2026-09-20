@@ -1,11 +1,14 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, nix-flatpak, ... }:
 
 {
-  home = {
-    packages = with pkgs; [
-      hello
-    ];
+  imports = [
+    # Import the nix-flatpak NixOS module and install applications system wide.
+    # HomeManager users should import `${nix-flatpak}/modules/home-manager.nix`
+    # where appropriate.
+    "${nix-flatpak}/modules/home-manager.nix"
+  ];
 
+  home = {
     username = "yanumibaal";
     homeDirectory = "/home/yanumibaal";
 
@@ -22,7 +25,7 @@
       })
       + "/share/applications/Return-to-Gaming-Mode.desktop";
 
-
+    # Automatically start Steam when going into Desktop mode
     file.".config/autostart/steam.desktop".text = ''
       [Desktop Entry]
       Type=Application
@@ -31,6 +34,15 @@
       Terminal=false
     '';
 
+    # Do not touch
     stateVersion = "26.11";
+  };
+
+  # Use only if there is no other way to install an application
+  services.flatpak = {
+    enable = true;
+    packages = [
+      "net.retrodeck.retrodeck"
+    ];
   };
 }

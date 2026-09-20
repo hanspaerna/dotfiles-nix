@@ -14,9 +14,10 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
 
-  outputs = { nixpkgs, jovian, nixos-hardware, nix-cachyos-kernel, home-manager, ... }: {
+  outputs = { nixpkgs, jovian, nixos-hardware, nix-cachyos-kernel, home-manager, nix-flatpak, ... }: {
     nixosConfigurations = {
       ally-nixos = nixpkgs.lib.nixosSystem { # Replace "hostname" with your system's hostname
         system = "x86_64-linux";
@@ -40,6 +41,7 @@
             home-manager.users = {
               yanumibaal = import ./home.nix;
             };
+            home-manager.extraSpecialArgs = { inherit nix-flatpak; };
           }
         ];
       };

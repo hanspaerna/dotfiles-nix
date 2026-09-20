@@ -189,7 +189,7 @@
 
   # Enable Flatpak
   xdg.portal.enable = true; # only needed if you are not using Gnome
-  services.flatpak.enable = true; # optional
+  
 
   # }}}
 
@@ -410,7 +410,7 @@
     }))
   ];
   
-
+  services.flatpak.enable = true;
   programs.virt-manager.enable = true;
 
   virtualisation = {
