@@ -103,12 +103,6 @@ in
       "net.retrodeck.retrodeck"
       "org.telegram.desktop"
     ];
-
-    overrides."net.retrodeck.retrodeck"."Session Bus Policy" = {
-      "org.freedesktop.Flatpak" = [
-        "talk" # disable flatpak sandboxing to support external emulators
-      ];
-    };
   };
 
   programs.konsole = {

@@ -30,4 +30,5 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.asus.battery.chargeUpto = 80; # this is the charge limit that will be set by default after each reboot/suspend/nix switch; you can set another temporary one via HHD or Gamescope UI
 }

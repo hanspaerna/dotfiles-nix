@@ -393,6 +393,7 @@
     yad
 
     supersonic
+    openmw
 
     # Create an FHS environment using the command `fhs`, enabling the execution of non-NixOS packages in NixOS!
     (let base = pkgs.appimageTools.defaultFhsEnvArgs; in
@@ -459,8 +460,8 @@
 
   # Fix for /bin/bash scripts
   services.envfs.enable = true;
-  # Needed to run non-NixOS binary (optionally used with nix-alien)
-  # programs.nix-ld.enable = true;
+  # Needed to run non-NixOS binaries
+  programs.nix-ld.enable = true;
   # Registers AppImage files to be run with appimage-run as interpreter
   programs.appimage = { enable = true; binfmt = true; };
 
