@@ -97,6 +97,22 @@
         "type": "github"
       }
     },
+    "libfprint-egismoc-sdcp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790188169,
+        "narHash": "sha256-MhQBAnOTuVcZ6xxbxeiRVZ1sENgnW8fLCci9tg8yVo4=",
+        "owner": "hanspaerna",
+        "repo": "libfprint-egismoc-sdcp-rogallyx",
+        "rev": "2a99a615eb7fbb226db3cf4a4181fbbae2f11faf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hanspaerna",
+        "repo": "libfprint-egismoc-sdcp-rogallyx",
+        "type": "github"
+      }
+    },
     "nix-cachyos-kernel": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -271,6 +287,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "jovian": "jovian",
+        "libfprint-egismoc-sdcp": "libfprint-egismoc-sdcp",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
         "nix-flatpak": "nix-flatpak",
         "nixos-hardware": "nixos-hardware",

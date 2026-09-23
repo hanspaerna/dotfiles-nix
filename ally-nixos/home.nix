@@ -131,9 +131,10 @@ in
       };
     };
 
-    configFile.kscreenlockerrc = {
-      Daemon.Autolock = false; # disable until someone finally invents a working virtual keyboard for lock screen in Wayland
-    };
+# lack of virtual keyboard on the lock screen is compensated by the working fingerprint sensor, but let's see
+#    configFile.kscreenlockerrc = {
+#      Daemon.Autolock = false; # disable until someone finally invents a working virtual keyboard for lock screen in Wayland
+#    };
 
     kscreenlocker = {
       appearance.wallpaper = wallpaper;
