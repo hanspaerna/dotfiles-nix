@@ -229,5 +229,6 @@ in
     };
   };
 
+  qt.kde.settings.kwinrc.Xwayland.XwaylandEisNoPrompt = true; # helps getting rid of "Share screen with Steam" and "Allow remote input", but is insecure.
 }
 
