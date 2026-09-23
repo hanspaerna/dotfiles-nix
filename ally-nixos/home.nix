@@ -180,6 +180,8 @@ in
                   "applications:org.telegram.desktop.desktop"
                   "applications:org.kde.konsole.desktop"
                   "applications:supersonic.desktop"
+                  "applications:github-desktop.desktop"
+                  "applications:protontricks.desktop"
                 ];
               };
             };
@@ -229,6 +231,7 @@ in
     };
   };
 
-  qt.kde.settings.kwinrc.Xwayland.XwaylandEisNoPrompt = true; # helps getting rid of "Share screen with Steam" and "Allow remote input", but is insecure.
+  # helps getting ri  d of "Share screen with Steam" and "Allow remote input", but is insecure.
+  qt.kde.settings.kwinrc.Xwayland.XwaylandEisNoPrompt = true;
 }
 
