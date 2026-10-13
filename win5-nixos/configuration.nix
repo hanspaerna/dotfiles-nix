@@ -64,7 +64,7 @@
   # {{{
 
   # Define your hostname.
-  networking.hostName = "ally-nixos";
+  networking.hostName = "win5-nixos";
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
@@ -302,6 +302,8 @@
     STEAMOS_NESTED_DESKTOP_WIDTH  = "1920";
     STEAMOS_NESTED_DESKTOP_HEIGHT = "1080";
     STEAM_EXTRA_COMPAT_TOOLS_PATHS = "$HOME/.local/share/Steam/compatibilitytools.d";
+
+    KWIN_IM_SHOW_ALWAYS = "1"; # try to force enable Plasma virtual keyboard
   };
 
   # Enable CEF debugging for decky-loader

@@ -54,7 +54,7 @@ controllers:
         noob_mode: default
       uinput:
         info: default
-        paddles_as: default
+        paddles_as: steam_input
         nintendo_qam: default
       xbox_elite:
         info: default

@@ -251,6 +251,20 @@ in
       };
     };
 
+    # binds the on-screen Plasma Keyboard to Win 5's "Keyboard" front button
+    hotkeys.commands."virtualkb" = {
+      name = "Virtual KB";
+      key = "Meta+Ctrl+O";
+      command = "${dotfiles}/assets/scripts/show-virtual-keyboard.sh";
+    };   
+
+    # sets "Plasma Keyboard" as default virtual keyboard (virtual keyboard mode 2 means "With Mouse")
+    configFile.kwinrc.Wayland = {
+      InputMethod =
+        "${pkgs.kdePackages.plasma-keyboard}/share/applications/org.kde.plasma.keyboard.desktop";
+      VirtualKeyboardMode = 2;
+    };
+
     session = {
       general.askForConfirmationOnLogout = false;
       sessionRestore.restoreOpenApplicationsOnLogin = "startWithEmptySession";
