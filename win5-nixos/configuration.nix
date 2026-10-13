@@ -107,7 +107,7 @@
     variant = "";
   };
 
-  # services.fprintd.enable = true;
+  services.fprintd.enable = true;
 
   # }}}
 
@@ -362,7 +362,7 @@
     xdg-utils desktop-file-utils
     wl-clipboard wl-clipboard-x11
     libwebp libva libva-utils libvpx # codecs
-    # fprintd # fingerprint sensor daemon
+    fprintd # fingerprint sensor daemon
 
     # CLI tools
     vim htop
