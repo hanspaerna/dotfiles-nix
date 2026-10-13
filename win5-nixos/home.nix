@@ -16,6 +16,8 @@ in
     plasma-manager.homeModules.plasma-manager
   ];
 
+
+
   home = {
     username = "${username}";
     homeDirectory = "/home/${username}";
@@ -33,6 +35,17 @@ in
       })
       + "/share/applications/Return-to-Gaming-Mode.desktop";
 
+
+    file.".local/share/applications/openwincontrols.desktop".text = ''
+      [Desktop Entry]
+      Type=Application
+      Name=OpenWinControls
+      Exec=~/Applications/OpenWinControls-x86_64.AppImage
+      Icon=applications-games-symbolic
+      terminal=false
+      Categories=Utility
+    '';
+
     # Automatically start Steam when going into Desktop mode
     file.".config/autostart/steam.desktop".text = ''
       [Desktop Entry]
@@ -41,6 +54,7 @@ in
       Exec=${pkgs.steam}/bin/steam -silent
       Terminal=false
     '';
+
 
     # Automatically start Trayscale in Desktop mode
     file.".config/autostart/trayscale.desktop".text = ''
@@ -90,6 +104,16 @@ in
   home.file = {
     ".local/share/user-places.xbel".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/config/user-places.xbel";
     ".local/share/user-places.xbel".force = true;
+  };
+
+  # install OpenWinControls AppImage (there's no nixpkg yet)
+  home.file."Applications/OpenWinControls-x86_64.AppImage" = {
+    source = pkgs.fetchurl {
+      url = "https://github.com/OpenWinControls/OpenWinControls/releases/download/20261003140338/OpenWinControls-x86_64.AppImage";
+      sha256 = "094fd27df8d5270e9cd422517cfbb142d5dcfda869c72e6cf5fe85b08781dca4";
+    };
+
+    executable = true;
   };
 
   #
@@ -183,6 +207,7 @@ in
                   "applications:supersonic.desktop"
                   "applications:github-desktop.desktop"
                   "applications:protontricks.desktop"
+                  "applications:openwincontrols.desktop"
                 ];
               };
             };

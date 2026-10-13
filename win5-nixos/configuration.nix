@@ -45,21 +45,17 @@
     initrd.unl0kr.enable = true;
   };
 
-  # Make performance-related device attributes controllable by users.
-  services.udev.extraRules = ''
-    # Enables manual GPU clock control in Steam
-    # - /sys/class/drm/card0/device/power_dpm_force_performance_level
-    # - /sys/class/drm/card0/device/pp_od_clk_voltage
-    ACTION=="add", SUBSYSTEM=="pci", DRIVER=="amdgpu", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/%p/power_dpm_force_performance_level /sys/%p/pp_od_clk_voltage"
 
-    # https://github.com/ublue-os/bazzite/blob/f5f033424281f88f0a132ec0561a5a5f002faf24/system_files/deck/shared/usr/lib/udev/rules.d/50-ally-fingerprint.rules
-    ACTION=="add", SUBSYSTEM=="usb", TEST=="power/control", ATTR{idVendor}=="1c7a", ATTR{idProduct}=="0588", ATTR{power/control}="auto"
-    '';
+  # allow OpenWinControls modify Win5 controls without root (user needs to be in 'openwincontrols' group)
+  services.udev.extraRules = ''
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="2f24", ATTRS{idProduct}=="0135", GROUP="openwincontrols", MODE="0660"
+    KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="2f24", ATTRS{idProduct}=="0137", GROUP="openwincontrols", MODE="0660"
+  '';
 
   # Create swapfile
   swapDevices = [{
     device = "/var/swapfile";
-    size = 20*1024; # 20GB for hibernate
+    size = 48*1024; # 48GB for hibernate
   }];
 
   # }}}
@@ -324,11 +320,13 @@
   # {User Setup}
   # {{{
 
+  users.groups.openwincontrols = {};
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.yanumibaal = {
     isNormalUser = true;
     description = "Hans Paerna";
-    extraGroups = [ "yanumibaal" "networkmanager" "wheel" "podman" "libvirtd" "gamemode" "docker" "video" "seat" "audio" "uinput" "decky" ];
+    extraGroups = [ "yanumibaal" "networkmanager" "wheel" "podman" "libvirtd" "gamemode" "openwincontrols" "docker" "video" "seat" "audio" "uinput" "decky" ];
     packages = with pkgs; [
       kdePackages.kate
     ];
@@ -495,6 +493,8 @@
     ]}:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
   '';
 };
+
+
 
   # }}}
 

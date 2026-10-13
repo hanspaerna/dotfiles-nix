@@ -1,16 +1,21 @@
-version: fef7c551
+version: 0012af9b
 tdp:
-  asus:
-    tdp_v2:
-      mode: performance
-      custom:
-        tdp: default
-        boost: default
-    cycle_tdp: default
+  qam:
+    tdp: 45
+    boost: default
     fan:
       mode: default
-      manual:
-        st30: default
+      manual_edge:
+        st40: default
+        st45: default
+        st50: default
+        st55: default
+        st60: default
+        st65: default
+        st70: default
+        st80: default
+        st90: default
+      manual_junction:
         st40: default
         st50: default
         st60: default
@@ -18,55 +23,30 @@ tdp:
         st80: default
         st90: default
         st100: default
-        disclaimer: default
   amd_energy:
-    mode:
-      mode: default
-      manual:
-        cpu_pref: default
-        cpu_min_freq: default
-        cpu_boost: default
-    gpu_freq:
-      mode: default
-      upper:
-        frequency: default
-      range:
-        min: default
-        max: default
-      manual:
-        frequency: default
-  battery:
-    charge_limit: p80
+    enable_error: default
+  smu:
+    energy_policy: default
+    std:
+      fast_limit: 45
+      slow_limit: 45
+      skin_limit: 45
+      stapm_limit: 45
+    adv:
+      temp_target: 90
+      slow_time: default
+      stapm_time: default
+      enable: default
   tdp:
     tdp_enable: false
     tdp_error: ''
-rgb:
-  handheld:
-    mode:
-      mode: default
-      solid:
-        hue: 310
-        saturation: 70
-        brightness: 10
-      pulse:
-        hue: default
-        saturation: default
-        brightness: default
-        speedd: default
-      duality:
-        hue: default
-        hue2: default
-        saturation: default
-        brightness: default
-        speedd: default
-      rainbow:
-        brightnessd: default
-      spiral:
-        brightnessd: default
-        speedd: default
-        direction: default
+  asus:
+    tdp_v2:
+      mode: performance
+  battery:
+    charge_limit: p80
 controllers:
-  rog_ally:
+  gpd_win:
     controller_mode:
       mode: default
       hidden:
@@ -74,36 +54,56 @@ controllers:
         noob_mode: default
       uinput:
         info: default
-        paddles_as: steam_input
+        paddles_as: default
         nintendo_qam: default
       xbox_elite:
         info: default
       dualsense:
         info: default
         paddles_as: default
-        led_support: default
         sync_gyro: default
         flip_z: default
         bluetooth_mode: default
-    swap_armory: default
+      disabled:
+        info: default
+    l4r4: default
+    main_chords: default
     imu: default
     imu_hz: default
+    imu_axis:
+      mode: default
+      remapped:
+        manufacturer: default
+        product: default
+        x_axis: default
+        x_invert: default
+        y_axis: default
+        y_invert: default
+        z_axis: default
+        z_invert: default
+    nintendo_mode: default
+  rog_ally:
+    controller_mode:
+      uinput:
+        paddles_as: steam_input
     limits:
       mode: manual
       manual:
-        vibration: default
         ls_min: 2
-        ls_max: default
         rs_min: 2
-        rs_max: default
-        lt_min: default
-        lt_max: default
-        rt_min: default
-        rt_max: default
-    select_reboots: default
-    nintendo_mode: default
-    rgb_boot: default
-    rgb_charging: default
+wincontrols:
+  wincontrols:
+    mouse_mode: default
+    mouse_mode_triggers: default
+    l4r4: default
+    deadzones:
+      mode: default
+      custom:
+        ls_center: default
+        ls_boundary: default
+        rs_center: default
+        rs_boundary: default
+    vibration: default
 gamemode:
   power:
     hibernate_auto: default
@@ -121,6 +121,13 @@ shortcuts:
     left_top: default
     left_bottom: default
     top: default
+    orientation:
+      mode: default
+      manual:
+        dmi: default
+        portrait: default
+        flip_x: default
+        flip_y: default
   keyboard:
     meta_press: default
     meta_hold: default
@@ -134,13 +141,19 @@ hhd:
     enforce_limits: default
     amd_energy_enable: default
     amd_energy_ppd: default
-    rgb: default
     powerbuttond: default
   http:
     localhost: default
     token: default
   steamos:
     gpu_set: default
+rgb:
+  handheld:
+    mode:
+      solid:
+        hue: 310
+        saturation: 70
+        brightness: 10
 
 #
 #     _______   _______    ______  
@@ -169,382 +182,310 @@ hhd:
 #
 # - CONFIGURATION PARAMETERS
 #
-# ┌> tdp.asus
-# │ *Asus TDP*
-# │ Uses the interface of Armory Crate to set the TDP of the device. 
+# ┌> tdp.qam
+# │ 
+# │ *TDP Settings*
 # │
-# │┌> tdp.asus.tdp_v2
-# ││ *TDP Mode*
-# ││ - modes: [quiet, balanced, performance, custom]
-# ││ - default: balanced
-# ││
-# ││┌> tdp.asus.tdp_v2.quiet
-# │││ 
-# │││ *Silent*
-# │││
-# ││┌> tdp.asus.tdp_v2.balanced
-# │││ 
-# │││ *Performance*
-# │││
-# ││┌> tdp.asus.tdp_v2.performance
-# │││ 
-# │││ *Turbo*
-# │││
-# ││┌> tdp.asus.tdp_v2.custom
-# │││ 
-# │││ *Custom*
-# │││
-# │││┌> tdp.asus.tdp_v2.custom.tdp
-# ││││ *TDP*
-# ││││ Average TDP Target. TDP Boost is recommended for desktop use and does not affect 
-# ││││ gaming. 
-# │││└ - default: 17
-# │││
-# │││┌> tdp.asus.tdp_v2.custom.boost
-# ││││ *TDP Boost*
-# ││││ Allows the device to temporarily boost by setting appropriate slow and fast 
-# ││││ TDPs. 
-# ││││ - boolean: [False, True]
-# │└└└ - default: True
+# │┌> tdp.qam.tdp
+# ││ *TDP*
+# ││ Controls all Ryzen SMU settings through preset curves. 
+# │└ - default: 25
 # │
-# │┌> tdp.asus.sys_tdp
+# │┌> tdp.qam.boost
+# ││ *TDP Boost*
+# ││ - boolean: [False, True]
+# │└ - default: True
+# │
+# │┌> tdp.qam.sys_tdp
 # ││ 
 # │└ * *
 # │
-# │┌> tdp.asus.cycle_tdp
-# ││ *Change TDP with View+Y*
-# ││ Allows you to cycle through TDP modes with the View+Y key combination. 
-# ││ Recommended to use with ROG Swap, as the View button will be muted to games. 
-# ││ - boolean: [False, True]
-# │└ - default: False
-# │
-# │┌> tdp.asus.fan
+# │┌> tdp.qam.fan
 # ││ *Custom Fan Curve*
-# ││ Allows you to set a custom fan curve. 
-# ││ - modes: [disabled, manual]
+# ││ Allows you to set a custom fan curve and to choose the temperature probe (Edge 
+# ││ or Junction). Junction is the peak temperature of the chip: responds faster and 
+# ││ prevents throttling. Edge is the temperature of the chip: responds slower and 
+# ││ prevents overheating. 
+# ││ - modes: [disabled, manual_edge, manual_junction]
 # ││ - default: disabled
 # ││
-# ││┌> tdp.asus.fan.disabled
-# │││ *Disabled*
-# │││ Lets the device manage the fan curve on its own. 
-# │││
-# ││┌> tdp.asus.fan.manual
+# ││┌> tdp.qam.fan.disabled
 # │││ 
-# │││ *Manual*
+# │││ *Disabled*
 # │││
-# │││┌> tdp.asus.fan.manual.st30
-# ││││ *30C*
-# ││││ Sets the speed at the named temperature. 
-# │││└ - default: 5
+# ││┌> tdp.qam.fan.manual_edge
+# │││ 
+# │││ *Manual (Edge, Smooth)*
 # │││
-# │││┌> tdp.asus.fan.manual.st40
+# │││┌> tdp.qam.fan.manual_edge.info
+# ││││ 
+# │││└ **
+# │││
+# │││┌> tdp.qam.fan.manual_edge.st40
 # ││││ *40C*
 # ││││ Sets the speed at the named temperature. 
-# │││└ - default: 10
+# │││└ - default: 30
 # │││
-# │││┌> tdp.asus.fan.manual.st50
+# │││┌> tdp.qam.fan.manual_edge.st45
+# ││││ *45C*
+# ││││ Sets the speed at the named temperature. 
+# │││└ - default: 30
+# │││
+# │││┌> tdp.qam.fan.manual_edge.st50
 # ││││ *50C*
 # ││││ Sets the speed at the named temperature. 
-# │││└ - default: 20
+# │││└ - default: 40
 # │││
-# │││┌> tdp.asus.fan.manual.st60
-# ││││ *60C*
+# │││┌> tdp.qam.fan.manual_edge.st55
+# ││││ *55C*
 # ││││ Sets the speed at the named temperature. 
-# │││└ - default: 35
+# │││└ - default: 45
 # │││
-# │││┌> tdp.asus.fan.manual.st70
-# ││││ *70C*
+# │││┌> tdp.qam.fan.manual_edge.st60
+# ││││ *60C*
 # ││││ Sets the speed at the named temperature. 
 # │││└ - default: 55
 # │││
-# │││┌> tdp.asus.fan.manual.st80
+# │││┌> tdp.qam.fan.manual_edge.st65
+# ││││ *65C*
+# ││││ Sets the speed at the named temperature. 
+# │││└ - default: 60
+# │││
+# │││┌> tdp.qam.fan.manual_edge.st70
+# ││││ *70C*
+# ││││ Sets the speed at the named temperature. 
+# │││└ - default: 70
+# │││
+# │││┌> tdp.qam.fan.manual_edge.st80
 # ││││ *80C*
 # ││││ Sets the speed at the named temperature. 
-# │││└ - default: 75
+# │││└ - default: 85
 # │││
-# │││┌> tdp.asus.fan.manual.st90
+# │││┌> tdp.qam.fan.manual_edge.st90
 # ││││ *90C*
 # ││││ Sets the speed at the named temperature. 
-# │││└ - default: 75
+# │││└ - default: 100
 # │││
-# │││┌> tdp.asus.fan.manual.st100
+# │││┌> tdp.qam.fan.manual_edge.reset
+# ││││ *Reset to Default*
+# ││└└ - action: Set to True to run.
+# ││
+# ││┌> tdp.qam.fan.manual_junction
+# │││ 
+# │││ *Manual (Tctl, Fast)*
+# │││
+# │││┌> tdp.qam.fan.manual_junction.info
+# ││││ 
+# │││└ **
+# │││
+# │││┌> tdp.qam.fan.manual_junction.st40
+# ││││ *40C*
+# ││││ Sets the speed at the named temperature. 
+# │││└ - default: 40
+# │││
+# │││┌> tdp.qam.fan.manual_junction.st50
+# ││││ *50C*
+# ││││ Sets the speed at the named temperature. 
+# │││└ - default: 45
+# │││
+# │││┌> tdp.qam.fan.manual_junction.st60
+# ││││ *60C*
+# ││││ Sets the speed at the named temperature. 
+# │││└ - default: 50
+# │││
+# │││┌> tdp.qam.fan.manual_junction.st70
+# ││││ *70C*
+# ││││ Sets the speed at the named temperature. 
+# │││└ - default: 80
+# │││
+# │││┌> tdp.qam.fan.manual_junction.st80
+# ││││ *80C*
+# ││││ Sets the speed at the named temperature. 
+# │││└ - default: 90
+# │││
+# │││┌> tdp.qam.fan.manual_junction.st90
+# ││││ *90C*
+# ││││ Sets the speed at the named temperature. 
+# │││└ - default: 100
+# │││
+# │││┌> tdp.qam.fan.manual_junction.st100
 # ││││ *100C*
 # ││││ Sets the speed at the named temperature. 
-# │││└ - default: 75
+# │││└ - default: 100
 # │││
-# │││┌> tdp.asus.fan.manual.reset
-# ││││ *Restore Default*
-# ││││ Restore a default sane fan curve. 
-# │││└ - action: Set to True to run.
-# │││
-# │││┌> tdp.asus.fan.manual.disclaimer
-# ││││ *Fan Curve Limitation*
-# └└└└ - default: Asus hardware limits the minimum fan curve depending on TDP mode.
+# │││┌> tdp.qam.fan.manual_junction.reset
+# ││││ *Reset to Default*
+# └└└└ - action: Set to True to run.
 # 
 # ┌> tdp.amd_energy
 # │ 
 # │ *Processor Settings*
 # │
-# │┌> tdp.amd_energy.mode
-# ││ *CPU Settings*
-# ││ - modes: [auto, manual]
-# ││ - default: auto
-# ││
-# ││┌> tdp.amd_energy.mode.auto
-# │││ *Auto*
-# │││ Handheld Daemon will manage the energy management settings. This includes CPU 
-# │││ governor, CPU boost, GPU frequency, and CPU power preferences. At low TDPs, the 
-# │││ CPU will be tuned down and at other TDPs, it will use balanced settings. 
-# │││
-# ││┌> tdp.amd_energy.mode.manual
-# │││ *Manual*
-# │││ Allows you to set the energy management settings manually. 
-# │││
-# │││┌> tdp.amd_energy.mode.manual.cpu_pref
-# ││││ *CPU Power (EPP)*
-# ││││ Sets the energy performance preference for the CPU. Keep on balanced for good 
-# ││││ performance on all TDPs. Options map to `power`, `balance_power`, 
-# ││││ `balance_performance`. Performance is not recommended and is not included. 
-# ││││ - options: [power, balance_power, balance_performance]
-# │││└ - default: balance_power
-# │││
-# │││┌> tdp.amd_energy.mode.manual.cpu_min_freq
-# ││││ *CPU Minimum Frequency*
-# ││││ Sets the minimum frequency for the CPU. Using 400MHz will save battery in light 
-# ││││ games. However, the delay of increasing the frequency may cause minor stutters, 
-# ││││ especially in VRR displays. 
-# ││││ - options: [min, nonlinear]
-# │││└ - default: min
-# │││
-# │││┌> tdp.amd_energy.mode.manual.cpu_boost
-# ││││ *CPU Boost*
-# ││││ Enables or disables the CPU boost frequencies. Disabling lowers total 
-# ││││ consumption by 2W with  minimal performance impact. 
-# ││││ - options: [disabled, enabled]
-# │└└└ - default: enabled
+# │┌> tdp.amd_energy.enable_error
+# ││ *Conflict Detected*
+# │└ - default: Energy Management can not be enabled while PPD or TuneD are enabled. `systemctl mask power-profiles-daemon` or `tuned`.
 # │
-# │┌> tdp.amd_energy.gpu_freq
-# ││ *GPU Frequency*
-# ││ Pins the GPU to a certain frequency. Helps in certain games that are CPU or GPU 
-# ││ heavy by shifting power to or from the GPU. Has a minor effect. 
-# ││ - modes: [auto, upper, range, manual]
-# ││ - default: auto
+# │┌> tdp.amd_energy.enable
+# ││ *Enable Processor Settings*
+# └└ - action: Set to True to run.
+# 
+# ┌> tdp.smu
+# │ 
+# │ *Advanced Configurator*
+# │
+# │┌> tdp.smu.apply
+# ││ *Apply Settings*
+# │└ - action: Set to True to run.
+# │
+# │┌> tdp.smu.status
+# ││ 
+# │└ *TDP Status*
+# │
+# │┌> tdp.smu.energy_policy
+# ││ *Energy Policy*
+# ││ - options: [power, balanced, performance]
+# │└ - default: balanced
+# │
+# │┌> tdp.smu.std
+# ││ *Standard Parameters*
+# ││ Standard TDP parameters for Ryzen processors. All need to be set to properly 
+# ││ control the TDP of the device.
+# ││ Ryzen processors have 2 modes: STTv2 and STAPM 
+# ││ (legacy). AMD suggests to  manufacturers to use STTv2, which makes the Legion Go 
+# ││ the only device to  offer the STAPM alternative through a BIOS setting.
+# ││ In 
+# ││ STTv2, the device will keep boosting until the "skin" of the device (hottest 
+# ││ user accessible spot) reaches a manufacturer set temperature. Then, the device 
+# ││ will use the Skin Temp TDP limit. In STAPM, the device averages the TDP values 
+# ││ from the 1-3 previous minutes and keeps that value under the STAPM TDP limit. 
+# ││ Either mode ignores the other mode's limit (STAPM limit does nothing on STT and 
+# ││ Skin Temp Limit does nothing on STAPM), so both should be set.
+# ││ The Fast and Slow 
+# ││ limits control boosting behavior. The Fast TDP limit is the actual max TDP value 
+# ││ of the device. Then,the Slow TDP limit averages the last 10-20s of TDP values 
+# ││ and keeps the value below it. 
 # ││
-# ││┌> tdp.amd_energy.gpu_freq.auto
-# │││ *Auto*
-# │││ Lets the GPU manage its own frequency. 
-# │││
-# ││┌> tdp.amd_energy.gpu_freq.upper
-# │││ *Max Limit*
-# │││ Limits the maximum frequency of the GPU. 
-# │││
-# │││┌> tdp.amd_energy.gpu_freq.upper.frequency
-# ││││ *Maximum Frequency*
-# ││└└ - default: 2700
+# ││┌> tdp.smu.std.fast_limit
+# │││ *Fast TDP Limit*
+# ││└ - default: 40
 # ││
-# ││┌> tdp.amd_energy.gpu_freq.range
-# │││ *Range*
-# │││ Sets the GPU frequency to a range. 
-# │││
-# │││┌> tdp.amd_energy.gpu_freq.range.min
-# ││││ *Minimum Frequency*
-# │││└ - default: 800
-# │││
-# │││┌> tdp.amd_energy.gpu_freq.range.max
-# ││││ *Maximum Frequency*
-# ││└└ - default: 2700
+# ││┌> tdp.smu.std.slow_limit
+# │││ *Slow TDP Limit*
+# ││└ - default: 27
 # ││
-# ││┌> tdp.amd_energy.gpu_freq.manual
-# │││ *Fixed*
-# │││ Pins the GPU to a certain frequency (not recommended). 
-# │││
-# │││┌> tdp.amd_energy.gpu_freq.manual.frequency
-# ││││ *Frequency*
-# └└└└ - default: 1700
+# ││┌> tdp.smu.std.skin_limit
+# │││ *Skin Temp TDP Limit*
+# ││└ - default: 25
+# ││
+# ││┌> tdp.smu.std.stapm_limit
+# │││ *STAPM TDP Limit*
+# │└└ - default: 25
+# │
+# │┌> tdp.smu.adv
+# ││ *Advanced Parameters*
+# ││ The Advanced Parameters below control boosting behavior and need to be adjusted 
+# ││ per device depending on its cooling system. They mostly affect boosting 
+# ││ behavior, which is important for desktop use.
+# ││ The exception is the Temp Target 
+# ││ (TCTL), which controls the max temperature of the CPU die. On most devices, it 
+# ││ can safely be raised up to 100C.  However, if a temperature spike makes the chip 
+# ││ reach 105C, it will enter a thermal protection mode, which is 5W, for a couple 
+# ││ of minutes.
+# ││ The integration times for Slow TDP and STAPM influence how many 
+# ││ previous TDP values the CPU will average to calculate its current Slow and STAPM 
+# ││  TDP values. 
+# ││
+# ││┌> tdp.smu.adv.temp_target
+# │││ *Temp Target (TCTL)*
+# ││└ - default: 95
+# ││
+# ││┌> tdp.smu.adv.slow_time
+# │││ *Slow Limit Integration Time*
+# ││└ - default: 10
+# ││
+# ││┌> tdp.smu.adv.stapm_time
+# │││ *STAPM Limit Integration Time*
+# ││└ - default: 200
+# ││
+# ││┌> tdp.smu.adv.enable
+# │││ *Enable Advanced Parameters*
+# │││ - boolean: [False, True]
+# └└└ - default: False
 # 
 # ┌> tdp.battery
 # │ 
 # │ *Battery Settings*
 # │
-# │┌> tdp.battery.charge_limit
-# ││ *Charge Limit (%)*
-# ││ Applies a charge limit to the battery, 75% and up. 
-# ││ - options: [p70, p80, p85, p90, p95, disabled]
-# └└ - default: disabled
-# 
-# ┌> rgb.handheld
-# │ 
-# │ *RGB Settings*
+# ┌> controllers.gpd_win
+# │ *GPD Controller*
+# │ Allows for configuring the gpd win controllers to a unified output. 
 # │
-# │┌> rgb.handheld.mode
-# ││ *RGB Mode*
-# ││ - modes: [disabled, solid, pulse, duality, rainbow, spiral]
-# ││ - default: solid
-# ││
-# ││┌> rgb.handheld.mode.disabled
-# │││ *Off*
-# │││ Turns the LEDs off. 
-# │││
-# ││┌> rgb.handheld.mode.solid
-# │││ *Solid*
-# │││ Maintains the LEDs at a solid color. 
-# │││
-# │││┌> rgb.handheld.mode.solid.hue
-# ││││ *Hue*
-# │││└ - default: 30
-# │││
-# │││┌> rgb.handheld.mode.solid.saturation
-# ││││ *Saturation*
-# │││└ - default: 100
-# │││
-# │││┌> rgb.handheld.mode.solid.brightness
-# ││││ *Brightness*
-# ││└└ - default: 50
-# ││
-# ││┌> rgb.handheld.mode.pulse
-# │││ *Pulse*
-# │││ Slowly pulses the LEDs as a prespecified color. 
-# │││
-# │││┌> rgb.handheld.mode.pulse.hue
-# ││││ *Hue*
-# │││└ - default: 30
-# │││
-# │││┌> rgb.handheld.mode.pulse.saturation
-# ││││ *Saturation*
-# │││└ - default: 100
-# │││
-# │││┌> rgb.handheld.mode.pulse.brightness
-# ││││ *Brightness*
-# │││└ - default: 50
-# │││
-# │││┌> rgb.handheld.mode.pulse.speedd
-# ││││ *Speed*
-# ││││ - options: [low, medium, high]
-# ││└└ - default: medium
-# ││
-# ││┌> rgb.handheld.mode.duality
-# │││ *Duality*
-# │││ Alternates between two colors. 
-# │││
-# │││┌> rgb.handheld.mode.duality.hue
-# ││││ *Hue*
-# │││└ - default: 60
-# │││
-# │││┌> rgb.handheld.mode.duality.hue2
-# ││││ *Secondary*
-# │││└ - default: 30
-# │││
-# │││┌> rgb.handheld.mode.duality.saturation
-# ││││ *Saturation*
-# │││└ - default: 100
-# │││
-# │││┌> rgb.handheld.mode.duality.brightness
-# ││││ *Brightness*
-# │││└ - default: 50
-# │││
-# │││┌> rgb.handheld.mode.duality.speedd
-# ││││ *Speed*
-# ││││ - options: [low, medium, high]
-# ││└└ - default: medium
-# ││
-# ││┌> rgb.handheld.mode.rainbow
-# │││ *Rainbow*
-# │││ Cycles through the different colors. 
-# │││
-# │││┌> rgb.handheld.mode.rainbow.brightnessd
-# ││││ *Brightness*
-# ││││ - options: [low, medium, high]
-# ││└└ - default: medium
-# ││
-# ││┌> rgb.handheld.mode.spiral
-# │││ *Spiral*
-# │││ Creates an RGB spiral around the stick. 
-# │││
-# │││┌> rgb.handheld.mode.spiral.brightnessd
-# ││││ *Brightness*
-# ││││ - options: [low, medium, high]
-# │││└ - default: medium
-# │││
-# │││┌> rgb.handheld.mode.spiral.speedd
-# ││││ *Speed*
-# ││││ - options: [low, medium, high]
-# │││└ - default: medium
-# │││
-# │││┌> rgb.handheld.mode.spiral.direction
-# ││││ *Direction*
-# ││││ - options: [left, right]
-# └└└└ - default: left
-# 
-# ┌> controllers.rog_ally
-# │ *Ally Controller*
-# │ Allows for configuring the ROG Ally controllers to a unified output. 
-# │
-# │┌> controllers.rog_ally.controller_mode
+# │┌> controllers.gpd_win.controller_mode
 # ││ *Controller Emulation*
-# ││ Emulate different controller types to fuse ROG features. 
-# ││ - modes: [hidden, uinput, xbox_elite, dualsense]
+# ││ Emulate different controller types to fuse gpd features. 
+# ││ - modes: [hidden, uinput, xbox_elite, dualsense, disabled]
 # ││ - default: uinput
 # ││
-# ││┌> controllers.rog_ally.controller_mode.hidden
+# ││┌> controllers.gpd_win.controller_mode.hidden
 # │││ *Hidden*
 # │││ Disables the controller. Handheld Daemon overlay will still work in gamemode. 
 # │││
-# │││┌> controllers.rog_ally.controller_mode.hidden.info
+# │││┌> controllers.gpd_win.controller_mode.hidden.info
 # ││││ **
 # ││││ - default: Disables the built-in controller.
 # ││││ External controllers will be slot 1.
 # ││││ Overlay will still work.
 # │││└ 
 # │││
-# │││┌> controllers.rog_ally.controller_mode.hidden.noob_mode
+# │││┌> controllers.gpd_win.controller_mode.hidden.noob_mode
 # ││││ *Extra buttons as Keyboard/Overlay*
 # ││││ Makes the left paddle bring up a keyboard and the right paddle bring up the 
 # ││││ overlay. 
 # ││││ - boolean: [False, True]
 # ││└└ - default: True
 # ││
-# ││┌> controllers.rog_ally.controller_mode.uinput
+# ││┌> controllers.gpd_win.controller_mode.uinput
 # │││ 
 # │││ *Xbox*
 # │││
-# │││┌> controllers.rog_ally.controller_mode.uinput.info
+# │││┌> controllers.gpd_win.controller_mode.uinput.info
 # ││││ **
 # ││││ - default: Simple Xbox controller. 
 # ││││ Universal compatibility.
 # ││││ Extra buttons are shortcuts or Steam Input.
 # │││└ 
 # │││
-# │││┌> controllers.rog_ally.controller_mode.uinput.paddles_as
+# │││┌> controllers.gpd_win.controller_mode.uinput.paddles_as
 # ││││ *Extra buttons as*
 # ││││ Changes the behavior of the extra buttons. Left button is Keyboard, right button 
 # ││││ is Overlay. Or they can be set for Steam Input. 
 # ││││ - options: [steam_input, noob, disabled]
 # │││└ - default: noob
 # │││
-# │││┌> controllers.rog_ally.controller_mode.uinput.nintendo_qam
+# │││┌> controllers.gpd_win.controller_mode.uinput.nintendo_qam
 # ││││ *Nintendo QAM Fix*
 # ││││ - boolean: [False, True]
 # ││└└ - default: False
 # ││
-# ││┌> controllers.rog_ally.controller_mode.xbox_elite
+# ││┌> controllers.gpd_win.controller_mode.xbox_elite
 # │││ 
 # │││ *Xbox Elite*
 # │││
-# │││┌> controllers.rog_ally.controller_mode.xbox_elite.info
+# │││┌> controllers.gpd_win.controller_mode.xbox_elite.info
 # ││││ **
 # ││││ - default: Extra buttons in Steam Input.
 # ││└└ 
 # ││
-# ││┌> controllers.rog_ally.controller_mode.dualsense
+# ││┌> controllers.gpd_win.controller_mode.dualsense
 # │││ 
 # │││ *Dualsense*
 # │││
-# │││┌> controllers.rog_ally.controller_mode.dualsense.info
+# │││┌> controllers.gpd_win.controller_mode.dualsense.info
 # ││││ **
 # ││││ - default: Touchpad, gyro, and RGB support. Extra buttons are remappable.
 # │││└ 
 # │││
-# │││┌> controllers.rog_ally.controller_mode.dualsense.paddles_as
+# │││┌> controllers.gpd_win.controller_mode.dualsense.paddles_as
 # ││││ *Extra buttons as*
 # ││││ Changes the behavior of the extra buttons. Left button is Keyboard, right button 
 # ││││ is Overlay. Or they can be left/right touchpad clicks. For the legion go, top 
@@ -552,13 +493,7 @@ hhd:
 # ││││ - options: [steam_input, noob, touchpad, disabled]
 # │││└ - default: steam_input
 # │││
-# │││┌> controllers.rog_ally.controller_mode.dualsense.led_support
-# ││││ *LED Support*
-# ││││ Passes through the LEDs to the controller, which allows games to control them. 
-# ││││ - boolean: [False, True]
-# │││└ - default: False
-# │││
-# │││┌> controllers.rog_ally.controller_mode.dualsense.sync_gyro
+# │││┌> controllers.gpd_win.controller_mode.dualsense.sync_gyro
 # ││││ *Gyro Output Sync*
 # ││││ Steam relies on the IMU timestamp for the touchpad as Mouse and `Gyro to Mouse 
 # ││││ [BETA]`. If the same timestamp is sent in 2 reports, this causes a division by 0 
@@ -569,7 +504,7 @@ hhd:
 # ││││ - boolean: [False, True]
 # │││└ - default: True
 # │││
-# │││┌> controllers.rog_ally.controller_mode.dualsense.flip_z
+# │││┌> controllers.gpd_win.controller_mode.dualsense.flip_z
 # ││││ *Invert Roll Axis*
 # ││││ Inverts the roll (Z) axis compared to a real Dualsense controller. Useful for 
 # ││││ Steam Input, since you want it to be inverted to look left to right, but an 
@@ -577,125 +512,173 @@ hhd:
 # ││││ - boolean: [False, True]
 # │││└ - default: True
 # │││
-# │││┌> controllers.rog_ally.controller_mode.dualsense.bluetooth_mode
+# │││┌> controllers.gpd_win.controller_mode.dualsense.bluetooth_mode
 # ││││ *Bluetooth Mode*
 # ││││ Emulates the controller in bluetooth mode instead of USB mode. This is the 
 # ││││ default as it causes less issues with how apps interact with the controller. 
 # ││││ However, using USB mode can improve LED support (?) in some games. Test and 
 # ││││ report back! 
 # ││││ - boolean: [False, True]
-# │└└└ - default: True
+# ││└└ - default: True
+# ││
+# ││┌> controllers.gpd_win.controller_mode.disabled
+# │││ 
+# │││ *Paused*
+# │││
+# │││┌> controllers.gpd_win.controller_mode.disabled.info
+# ││││ **
+# │└└└ - default: Pauses controller emulation.
 # │
-# │┌> controllers.rog_ally.swap_armory
-# ││ *Swap ROG and Menu/View*
-# ││ Swaps the Armory Crate and Command center buttons with start and select. 
-# ││ - boolean: [False, True]
-# │└ - default: False
+# │┌> controllers.gpd_win.l4r4
+# ││ *Menu/L4/R4 Mapping*
+# ││ Maps L4/R4 to Steam Input (requires L4/R4 as HHD in Wincontrols tab). If 
+# ││ disabled, they are keyboard buttons. Menu/L4/R4 can be combos: Menu is 
+# ││ single-press QAM, double HHD, hold Xbox. L4/R4 are single-press QAM, hold HHD 
+# ││ (legacy).  
+# ││ - options: [disabled, generic, menu, l4, r4]
+# │└ - default: r4
 # │
-# │┌> controllers.rog_ally.imu
+# │┌> controllers.gpd_win.main_chords
+# ││ *Start/Select do SteamOS Combos*
+# ││ When holding Select or Start, if another button is pressed, they become the Xbox 
+# ││ button, which allows doing SteamOS combos (Select+RT is screenshot). 
+# ││ - options: [disabled, select, start_select]
+# │└ - default: disabled
+# │
+# │┌> controllers.gpd_win.imu
 # ││ *Motion Support*
 # ││ Enable gyroscope/accelerometer (IMU) support (.3% background CPU use) 
 # ││ - boolean: [False, True]
 # │└ - default: True
 # │
-# │┌> controllers.rog_ally.imu_hz
+# │┌> controllers.gpd_win.imu_hz
 # ││ *Motion Hz*
 # ││ Sets the sampling frequency for the IMU. 
 # ││ - options: [100, 200, 400, 800]
-# │└ - default: 200
+# │└ - default: 400
 # │
-# │┌> controllers.rog_ally.limits
-# ││ *Deadzones & Vibration*
-# ││ Configure joystick and trigger deadzones, vibration intensity. 
-# ││ - modes: [default, manual]
+# │┌> controllers.gpd_win.imu_axis
+# ││ *Motion Axis*
+# ││ - modes: [default, remapped]
 # ││ - default: default
 # ││
-# ││┌> controllers.rog_ally.limits.default
+# ││┌> controllers.gpd_win.imu_axis.default
 # │││ *Default*
-# │││ Uses reasonable values based on hardware. 
+# │││ The default axis loaded for this device. 
 # │││
-# ││┌> controllers.rog_ally.limits.manual
-# │││ *Manual*
-# │││ Allows for manual configuration of deadzones and vibration intensity. 
+# ││┌> controllers.gpd_win.imu_axis.remapped
+# │││ *Override*
+# │││ Remap and invert the axis of your device. If the axis of your device are wrong, 
+# │││ please submit a picture or a text version of the following. 
 # │││
-# │││┌> controllers.rog_ally.limits.manual.vibration
-# ││││ *Vibration Intensity*
-# ││││ Intensity of the vibration. The higher the value, the stronger the vibration. 
-# │││└ - default: 100
+# │││┌> controllers.gpd_win.imu_axis.remapped.manufacturer
+# ││││ *Manufacturer*
+# │││└ - default: "GPD"
 # │││
-# │││┌> controllers.rog_ally.limits.manual.ls_min
-# ││││ *Left Stick Minimum*
-# ││││ Deadzone for the joystick. The higher the value, the more the joystick needs to 
-# ││││ be moved before registering. 
-# │││└ - default: 0
+# │││┌> controllers.gpd_win.imu_axis.remapped.product
+# ││││ *Product*
+# │││└ - default: "G1618-05"
 # │││
-# │││┌> controllers.rog_ally.limits.manual.ls_max
-# ││││ *Left Stick Maximum*
-# ││││ Maximum value for joystick. The higher the value, the more the joystick needs to 
-# ││││ be moved before reaching maximum. 
-# │││└ - default: 96
+# │││┌> controllers.gpd_win.imu_axis.remapped.x_axis
+# ││││ *Axis X*
+# ││││ - options: [x, y, z]
+# │││└ - default: z
 # │││
-# │││┌> controllers.rog_ally.limits.manual.rs_min
-# ││││ *Right Stick Minimum*
-# ││││ Deadzone for the joystick. The higher the value, the more the joystick needs to 
-# ││││ be moved before registering. 
-# │││└ - default: 0
+# │││┌> controllers.gpd_win.imu_axis.remapped.x_invert
+# ││││ *Invert X*
+# ││││ - boolean: [False, True]
+# │││└ - default: True
 # │││
-# │││┌> controllers.rog_ally.limits.manual.rs_max
-# ││││ *Right Stick Maximum*
-# ││││ Maximum value for joystick. The higher the value, the more the joystick needs to 
-# ││││ be moved before reaching maximum. 
-# │││└ - default: 96
+# │││┌> controllers.gpd_win.imu_axis.remapped.y_axis
+# ││││ *Axis Y*
+# ││││ - options: [x, y, z]
+# │││└ - default: x
 # │││
-# │││┌> controllers.rog_ally.limits.manual.lt_min
-# ││││ *Left Trigger Minimum*
-# ││││ Deadzone for the joystick. The higher the value, the more the joystick needs to 
-# ││││ be moved before registering. 
-# │││└ - default: 5
+# │││┌> controllers.gpd_win.imu_axis.remapped.y_invert
+# ││││ *Invert Y*
+# ││││ - boolean: [False, True]
+# │││└ - default: False
 # │││
-# │││┌> controllers.rog_ally.limits.manual.lt_max
-# ││││ *Left Trigger Maximum*
-# ││││ Maximum value for joystick. The higher the value, the more the joystick needs to 
-# ││││ be moved before reaching maximum. 
-# │││└ - default: 96
+# │││┌> controllers.gpd_win.imu_axis.remapped.z_axis
+# ││││ *Axis Z*
+# ││││ - options: [x, y, z]
+# │││└ - default: y
 # │││
-# │││┌> controllers.rog_ally.limits.manual.rt_min
-# ││││ *Right Trigger Minimum*
-# ││││ Deadzone for the joystick. The higher the value, the more the joystick needs to 
-# ││││ be moved before registering. 
-# │││└ - default: 5
-# │││
-# │││┌> controllers.rog_ally.limits.manual.rt_max
-# ││││ *Right Trigger Maximum*
-# ││││ Maximum value for joystick. The higher the value, the more the joystick needs to 
-# ││││ be moved before reaching maximum. 
-# │││└ - default: 96
-# │││
-# │││┌> controllers.rog_ally.limits.manual.reset
-# ││││ *Reset to Default*
-# ││││ Reset all values to default. 
-# │└└└ - action: Set to True to run.
+# │││┌> controllers.gpd_win.imu_axis.remapped.z_invert
+# ││││ *Invert Z*
+# ││││ - boolean: [False, True]
+# │└└└ - default: True
 # │
-# │┌> controllers.rog_ally.select_reboots
-# ││ *Hold View to Reboot*
-# ││ - boolean: [False, True]
-# │└ - default: False
-# │
-# │┌> controllers.rog_ally.nintendo_mode
+# │┌> controllers.gpd_win.nintendo_mode
 # ││ *Nintendo Mode (A-B Swap)*
 # ││ Swaps A with B and X with Y. 
 # ││ - boolean: [False, True]
-# │└ - default: False
-# │
-# │┌> controllers.rog_ally.rgb_boot
-# ││ *RGB During Boot*
-# ││ - boolean: [False, True]
-# │└ - default: False
-# │
-# │┌> controllers.rog_ally.rgb_charging
-# ││ *RGB During Charging Asleep*
-# ││ - boolean: [False, True]
 # └└ - default: False
+# 
+# ┌> wincontrols.wincontrols
+# │ *WinControls*
+# │ Specialized settings for GPD devices. 
+# │
+# │┌> wincontrols.wincontrols.mouse_mode
+# ││ *Mouse Mode Mapping*
+# ││ - options: [unchanged, mouse, wasd]
+# │└ - default: unchanged
+# │
+# │┌> wincontrols.wincontrols.mouse_mode_triggers
+# ││ *Mouse Mode Triggers*
+# ││ - options: [unchanged, gpd, steamos]
+# │└ - default: unchanged
+# │
+# │┌> wincontrols.wincontrols.l4r4
+# ││ *L4/R4 Mapping*
+# ││ - options: [unchanged, hhd, default]
+# │└ - default: hhd
+# │
+# │┌> wincontrols.wincontrols.deadzones
+# ││ *Deadzones*
+# ││ - modes: [unchanged, custom]
+# ││ - default: unchanged
+# ││
+# ││┌> wincontrols.wincontrols.deadzones.unchanged
+# │││ *Do not change*
+# │││ Do not change the deadzones. 
+# │││
+# ││┌> wincontrols.wincontrols.deadzones.custom
+# │││ *Set Deadzones*
+# │││ Use custom deadzones. 
+# │││
+# │││┌> wincontrols.wincontrols.deadzones.custom.ls_center
+# ││││ *Left Stick Center*
+# │││└ - default: 0
+# │││
+# │││┌> wincontrols.wincontrols.deadzones.custom.ls_boundary
+# ││││ *Left Stick Boundary*
+# │││└ - default: 0
+# │││
+# │││┌> wincontrols.wincontrols.deadzones.custom.rs_center
+# ││││ *Right Stick Center*
+# │││└ - default: 0
+# │││
+# │││┌> wincontrols.wincontrols.deadzones.custom.rs_boundary
+# ││││ *Right Stick Boundary*
+# │└└└ - default: 0
+# │
+# │┌> wincontrols.wincontrols.vibration
+# ││ *Vibration Strength*
+# ││ - options: [off, medium, high]
+# │└ - default: medium
+# │
+# │┌> wincontrols.wincontrols.fwver
+# ││ 
+# │└ *Firmware*
+# │
+# │┌> wincontrols.wincontrols.status
+# ││ 
+# │└ *Error*
+# │
+# │┌> wincontrols.wincontrols.apply
+# ││ *Apply Settings*
+# └└ - action: Set to True to run.
 # 
 # ┌> gamemode.power
 # │ 
@@ -801,7 +784,39 @@ hhd:
 # │┌> shortcuts.touchscreen.top
 # ││ *↓ Swipe Down*
 # ││ - options: [disabled, keyboard, steam_qam, steam_expanded, hhd_qam, hhd_expanded, tdp_cycle]
-# └└ - default: disabled
+# │└ - default: disabled
+# │
+# │┌> shortcuts.touchscreen.orientation
+# ││ *Orientation Correction*
+# ││ - modes: [auto, manual]
+# ││ - default: auto
+# ││
+# ││┌> shortcuts.touchscreen.orientation.auto
+# │││ 
+# │││ *Auto*
+# │││
+# ││┌> shortcuts.touchscreen.orientation.manual
+# │││ 
+# │││ *Manual*
+# │││
+# │││┌> shortcuts.touchscreen.orientation.manual.dmi
+# ││││ *Device*
+# │││└ - default: "GPD" - "G1618-05"
+# │││
+# │││┌> shortcuts.touchscreen.orientation.manual.portrait
+# ││││ *Portrait*
+# ││││ - boolean: [False, True]
+# │││└ - default: False
+# │││
+# │││┌> shortcuts.touchscreen.orientation.manual.flip_x
+# ││││ *Flip Left-Right*
+# ││││ - boolean: [False, True]
+# │││└ - default: False
+# │││
+# │││┌> shortcuts.touchscreen.orientation.manual.flip_y
+# ││││ *Flip Top-Bottom*
+# ││││ - boolean: [False, True]
+# └└└└ - default: False
 # 
 # ┌> shortcuts.keyboard
 # │ 
@@ -897,11 +912,6 @@ hhd:
 # │┌> hhd.settings.amd_energy_ppd
 # ││ *Enable PPD Emulation (KDE/Gnome Power)*
 # ││ Enable PPD service to manage the power preferences for the system. 
-# ││ - boolean: [False, True]
-# │└ - default: True
-# │
-# │┌> hhd.settings.rgb
-# ││ *Enable RGB support.*
 # ││ - boolean: [False, True]
 # │└ - default: True
 # │
